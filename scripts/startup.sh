@@ -89,6 +89,7 @@ sed -i "s/  server_name phorge.local;/  server_name $BASE_URI;/g" /etc/nginx/sit
 #sed "s/    return 301 \$scheme:\/\/phorge.local$request_uri;"
 #general parameters configuration
 /var/www/phorge/phorge/bin/config set pygments.enabled true
+/var/www/phorge/phorge/bin/config set phabricator.show-prototypes true
 #setup db if not exists
 /var/www/phorge/phorge/bin/storage upgrade --force
 #start supervisord
