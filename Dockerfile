@@ -15,7 +15,7 @@ ENV MYSQL_PORT=3306
 ENV PROTOCOL=http
 
 
-EXPOSE 8022 80 443
+EXPOSE 80 443
 
 # TODO: Once Phorge is updated to support PHP 8.0, 
 # we can use PHP from debian repo instead of sury.org
@@ -26,19 +26,20 @@ RUN apt-get update -y && apt-get install -y wget lsb-release && \
     apt-get update -y && \
     apt-get -y install \
     mercurial subversion sudo apt-transport-https ca-certificates wget git \
-    php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-mbstring php7.4-fpm php7.4-zip php-pear \
+    php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-ldap php7.4-mbstring php7.4-fpm php7.4-zip php-pear \
     nginx supervisor procps python3-pygments imagemagick curl
 
-RUN mkdir -p /var/www/phorge/phorge \
-    mkdir -p /var/www/phorge/arcanist \
-    && cd /var/www/phorge/phorge && git init \
-    && git remote add origin https://we.phorge.it/source/phorge.git \
-    && git fetch --depth=1 origin $PHORGE_SHA \
-    && git checkout FETCH_HEAD \
-    && cd /var/www/phorge/arcanist && git init \
-    && git remote add origin https://we.phorge.it/source/arcanist.git \
-    && git fetch --depth=1 origin master \
-    && git checkout FETCH_HEAD
+RUN mkdir -p /var/www/phorge \
+    && cd /var/www/phorge \
+    && git clone https://we.phorge.it/source/phorge.git \
+    && cd /var/www/phorge/phorge \
+    && git checkout $PHORGE_SHA \
+    && cd /var/www/phorge \
+    && git clone https://we.phorge.it/source/arcanist.git \
+    && cd /var/www/phorge/arcanist \
+    && git checkout $ARCANIST_SHA \
+    && rm -rf /var/www/phorge/phorge/.git \
+    && rm -rf /var/www/phorge/arcanist/.git
 
 
 # #copy nginx config
