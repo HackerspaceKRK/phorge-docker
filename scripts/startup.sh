@@ -47,6 +47,14 @@ fi
 if [ ! -z "$MINIO_SERVER" ]
 then
     /var/www/phorge/phorge/bin/config set storage.s3.bucket $MINIO_SERVER
+    if [ ! -z "$MINIO_SERVER_SECRET_KEY_FILE" ]
+    then
+        MINIO_SERVER_SECRET_KEY=$(cat $MINIO_SERVER_SECRET_KEY_FILE)
+    fi
+    if [ ! -z "$MINIO_SERVER_ACCESS_KEY_FILE" ]
+    then
+        MINIO_SERVER_ACCESS_KEY=$(cat $MINIO_SERVER_ACCESS_KEY_FILE)
+    fi
     /var/www/phorge/phorge/bin/config set amazon-s3.secret-key $MINIO_SERVER_SECRET_KEY
     /var/www/phorge/phorge/bin/config set amazon-s3.access-key $MINIO_SERVER_ACCESS_KEY
     /var/www/phorge/phorge/bin/config set amazon-s3.endpoint $MINIO_SERVER:$MINIO_PORT
