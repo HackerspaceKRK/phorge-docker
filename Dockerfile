@@ -21,13 +21,15 @@ EXPOSE 80 443
 # we can use PHP from debian repo instead of sury.org
 
 RUN apt-get update -y && apt-get install -y wget lsb-release && \
-    wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+    wget --progress=dot:giga -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list.d/php.list && \
     apt-get update -y && \
     apt-get -y install \
     mercurial subversion sudo apt-transport-https ca-certificates wget git \
     php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-ldap php7.4-mbstring php7.4-fpm php7.4-zip php-pear \
-    nginx supervisor procps python3-pygments imagemagick curl
+    nginx supervisor procps python3-pygments imagemagick curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir -p /var/www/phorge \
     && cd /var/www/phorge \
