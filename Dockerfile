@@ -10,14 +10,14 @@ ARG PHORGE_SHA=98dfac53ba721467a32b96641f3a18d428fb5441
 ARG ARCANIST_SHA=788098096e113f34f0fafef23e4d16a2e80d64ca
 
 
-ENV GIT_USER=git 
+ENV GIT_USER=git
 ENV MYSQL_PORT=3306
 ENV PROTOCOL=http
 
 
 EXPOSE 80 443
 
-# TODO: Once Phorge is updated to support PHP 8.0, 
+# TODO: Once Phorge is updated to support PHP 8.0,
 # we can use PHP from debian repo instead of sury.org
 
 RUN apt-get update -y && apt-get install -y wget lsb-release && \
