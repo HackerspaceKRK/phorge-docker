@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.authors="alufers <alufers@wp.pl>"
 LABEL org.opencontainers.image.title="Phorge"
 LABEL org.opencontainers.image.description="Phorge is a Phabricator fork with a focus on performance and stability."
 
-ARG PHORGE_SHA=98dfac53ba721467a32b96641f3a18d428fb5441
-ARG ARCANIST_SHA=788098096e113f34f0fafef23e4d16a2e80d64ca
+ARG PHORGE_SHA=aeab4efe17cfba0dcb2f2b1b487c7175d1d428b8
+ARG ARCANIST_SHA=8b907d7716617989d9d30ddbb3152307560cd36d
 
 
 ENV GIT_USER=git
@@ -20,13 +20,16 @@ EXPOSE 80 443
 # TODO: Once Phorge is updated to support PHP 8.0,
 # we can use PHP from debian repo instead of sury.org
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update -y && apt-get install -y wget lsb-release && \
     wget --progress=dot:giga -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list.d/php.list && \
     apt-get update -y && \
     apt-get -y install \
     mercurial subversion sudo apt-transport-https ca-certificates wget git \
-    php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-ldap php7.4-mbstring php7.4-fpm php7.4-zip php-pear \
+    php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-ldap \
+    php7.4-mbstring php7.4-fpm php7.4-zip php-pear php7.4-xml \
     nginx supervisor procps python3-pygments imagemagick curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
