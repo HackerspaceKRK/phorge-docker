@@ -61,7 +61,14 @@ then
     /var/www/phorge/phorge/bin/config set amazon-s3.secret-key "$MINIO_SERVER_SECRET_KEY"
     /var/www/phorge/phorge/bin/config set amazon-s3.access-key "$MINIO_SERVER_ACCESS_KEY"
     /var/www/phorge/phorge/bin/config set amazon-s3.endpoint "$MINIO_SERVER:$MINIO_PORT"
-    # /var/www/phorge/phorge/bin/config set amazon-s3.region us-west-1
+    if [ -n "$MINIO_REGION" ]
+    then
+        /var/www/phorge/phorge/bin/config set amazon-s3.region "$MINIO_REGION"
+    else
+        # phorge needs a region to think that s3 is configured at all
+        /var/www/phorge/phorge/bin/config set amazon-s3.region us-west-1
+    fi
+
 fi
 
 if [ -n "$MAILERS_CONFIG_FILE" ]
