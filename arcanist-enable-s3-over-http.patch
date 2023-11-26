@@ -1,0 +1,19 @@
+diff --git a/src/future/aws/PhutilAWSFuture.php b/src/future/aws/PhutilAWSFuture.php
+index 90395b4b..db897b2e 100644
+--- a/src/future/aws/PhutilAWSFuture.php
++++ b/src/future/aws/PhutilAWSFuture.php
+@@ -98,7 +98,13 @@ abstract class PhutilAWSFuture extends FutureProxy {
+       $path = $this->getPath();
+       $data = $this->getData();
+ 
+-      $uri = id(new PhutilURI("https://{$host}/", $params))
++      $full_url = $host;
++      // check if $host already has http or https, prepend https if not
++      if (!preg_match('/^https?:\/\//', $host)) {
++        $full_url = "https://${host}/";
++      }
++
++      $uri = id(new PhutilURI($full_url, $params))
+         ->setPath($path);
+ 
+       $future = id(new HTTPSFuture($uri, $data))

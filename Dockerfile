@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.authors="alufers <alufers@wp.pl>"
 LABEL org.opencontainers.image.title="Phorge"
 LABEL org.opencontainers.image.description="Phorge is a Phabricator fork with a focus on performance and stability."
 
-ARG PHORGE_SHA=aeab4efe17cfba0dcb2f2b1b487c7175d1d428b8
-ARG ARCANIST_SHA=8b907d7716617989d9d30ddbb3152307560cd36d
+ARG PHORGE_SHA=cf8d5d60a594f2f172450879327caac0f0e6afc8
+ARG ARCANIST_SHA=5bc53cfe53d0afe813b19f28d6151273e7b86499
 
 
 ENV GIT_USER=git
@@ -34,6 +34,8 @@ RUN apt-get update -y && apt-get install -y wget lsb-release && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+COPY ./arcanist-enable-s3-over-http.patch /tmp/arcanist-enable-s3-over-http.patch
+
 RUN mkdir -p /var/www/phorge \
     && cd /var/www/phorge \
     && git clone https://we.phorge.it/source/phorge.git \
@@ -43,6 +45,7 @@ RUN mkdir -p /var/www/phorge \
     && git clone https://we.phorge.it/source/arcanist.git \
     && cd /var/www/phorge/arcanist \
     && git checkout $ARCANIST_SHA \
+    && git apply /tmp/arcanist-enable-s3-over-http.patch \
     && rm -rf /var/www/phorge/phorge/.git \
     && rm -rf /var/www/phorge/arcanist/.git
 
