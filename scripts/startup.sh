@@ -74,6 +74,7 @@ fi
 if [ -n "$LOCAL_DISK_STORAGE_PATH" ]
 then
     /var/www/phorge/phorge/bin/config set storage.local-disk.path "$LOCAL_DISK_STORAGE_PATH"
+    chmod -R 777 "$LOCAL_DISK_STORAGE_PATH" # phorge needs to be able to write to this directory
 fi
 
 if [ -n "$MAILERS_CONFIG_FILE" ]
