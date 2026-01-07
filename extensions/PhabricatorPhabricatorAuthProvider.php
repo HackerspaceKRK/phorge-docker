@@ -137,4 +137,30 @@ final class PhabricatorAuthentikAuthProvider extends PhabricatorOAuth2AuthProvid
   public function hasSetupStep() {
     return true;
   }
+
+  public function processLoginRequest( PhabricatorAuthLoginController $controller) {
+    list($account, $response) = parent::processLoginRequest($controller);
+
+    // hack:
+    // After logging in via authentik try to link the external account to an existing
+    // phabricator user with the same username.
+    // This prevents triggering account registration for old users who
+    // had an account created with LDAP - before authentik was in use.
+    if ($account && !$account->getUserPHID()) {
+
+      $user = id(new PhabricatorUser())->loadOneWhere(
+            'username = %s',
+            $account->getUsername());
+      if($user) {
+        $account->setUserPHID($user->getPHID());
+        // Disable CSRF protection, we are coming back from authentik.
+        // If we got here this means that the code flow was successful,
+        // so there is no CSRF risk.
+        AphrontWriteGuard::beginUnguardedWrites();
+        $account->save();
+        AphrontWriteGuard::endUnguardedWrites();
+      }
+    }
+    return array($account, $response);
+  }
 }
