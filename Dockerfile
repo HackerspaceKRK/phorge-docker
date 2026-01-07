@@ -67,6 +67,9 @@ COPY ./configs/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
 COPY ./configs/supervisord.conf /etc/supervisord.conf
 COPY ./scripts/startup.sh /startup.sh
 
+COPY ./extensions/PhabricatorPhabricatorAuthProvider.php /var/www/phorge/phorge/src/extensions/PhabricatorPhabricatorAuthProvider.php
+COPY ./extensions/PhutilAuthentikAuthAdapter.php /var/www/phorge/phorge/src/extensions/PhutilAuthentikAuthAdapter.php
+
 RUN mkdir -p /run/php && chown www-data:www-data /run/php \
     && chmod +x /startup.sh
 
