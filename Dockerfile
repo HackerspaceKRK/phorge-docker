@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.authors="alufers <alufers@wp.pl>"
 LABEL org.opencontainers.image.title="Phorge"
 LABEL org.opencontainers.image.description="Phorge is a Phabricator fork with a focus on performance and stability."
 
-ARG PHORGE_SHA=58f1c83a5ac56073a1960772c78c99ece72d4729
-ARG ARCANIST_SHA=84210cedc6ce4ceb6b8ffcfb47fdaaa6e6d83917
+ARG PHORGE_SHA=15f483c41aa19a4d91e7eb0c96f6e29b88bdd7a8
+ARG ARCANIST_SHA=41c9cfdc153414afa9b81ca56b8684d3e93076b1
 
 
 ENV GIT_USER=git
@@ -30,7 +30,7 @@ RUN apt-get update -y && apt-get install -y wget lsb-release && \
     mercurial subversion sudo apt-transport-https ca-certificates wget git \
     php7.4 php7.4-mysql php7.4-gd php7.4-curl php7.4-apcu php7.4-cli php7.4-json php7.4-ldap \
     php7.4-mbstring php7.4-fpm php7.4-zip php-pear php7.4-xml \
-    nginx supervisor procps python3-pygments imagemagick curl && \
+    nginx supervisor procps python3-pygments imagemagick curl mysql-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
