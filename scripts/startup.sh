@@ -114,6 +114,9 @@ sed -i "s/  server_name phorge.local;/  server_name $BASE_URI;/g" /etc/nginx/sit
 #general parameters configuration
 /var/www/phorge/phorge/bin/config set pygments.enabled true
 /var/www/phorge/phorge/bin/config set phabricator.show-prototypes true
+# Hardening: block Phorge from making outbound requests to private/internal
+# address ranges (SSRF protection for link previews, remote repo fetches, etc.)
+/var/www/phorge/phorge/bin/config set security.outbound-blacklist '["0.0.0.0/8","10.0.0.0/8","172.16.0.0/12","192.168.0.0/16","169.254.0.0/16","127.0.0.0/8"]'
 #setup db if not exists
 /var/www/phorge/phorge/bin/storage upgrade --force
 #start supervisord

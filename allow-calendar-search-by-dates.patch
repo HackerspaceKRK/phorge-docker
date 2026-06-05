@@ -1,0 +1,13 @@
+diff --git a/src/applications/search/field/PhabricatorSearchDateControlField.php b/src/applications/search/field/PhabricatorSearchDateControlField.php
+index 9ce5c0227d..aba95354c6 100644
+--- a/src/applications/search/field/PhabricatorSearchDateControlField.php
++++ b/src/applications/search/field/PhabricatorSearchDateControlField.php
+@@ -36,4 +36,8 @@ final class PhabricatorSearchDateControlField
+     return $value->setOptional(true);
+   }
+ 
++  protected function newConduitParameterType() {
++    return new ConduitEpochParameterType();
++  }
++
+ }
