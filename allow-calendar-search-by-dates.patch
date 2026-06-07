@@ -1,8 +1,25 @@
 diff --git a/src/applications/search/field/PhabricatorSearchDateControlField.php b/src/applications/search/field/PhabricatorSearchDateControlField.php
-index 9ce5c0227d..aba95354c6 100644
+index 9ce5c02..f298b80 100644
 --- a/src/applications/search/field/PhabricatorSearchDateControlField.php
 +++ b/src/applications/search/field/PhabricatorSearchDateControlField.php
-@@ -36,4 +36,8 @@ final class PhabricatorSearchDateControlField
+@@ -30,10 +30,25 @@ final class PhabricatorSearchDateControlField
+       return $value->setOptional(true);
+     }
+ 
++    $is_epoch = !is_array($value);
++
+     $value = AphrontFormDateControlValue::newFromWild(
+       $this->getViewer(),
+       $value);
++
++    // A bare epoch value (e.g. supplied via Conduit) carries no "enabled" flag,
++    // so it would otherwise be treated as a disabled optional control and
++    // silently ignored. The web UI submits a {d, t, e} dictionary whose "e" key
++    // governs the enabled state, so only force-enable the epoch form.
++    if ($is_epoch) {
++      $value->setEnabled(true);
++    }
++
      return $value->setOptional(true);
    }
  

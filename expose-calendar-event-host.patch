@@ -1,0 +1,23 @@
+diff --git a/src/applications/calendar/storage/PhabricatorCalendarEvent.php b/src/applications/calendar/storage/PhabricatorCalendarEvent.php
+index 60a05e0..c148ad6 100644
+--- a/src/applications/calendar/storage/PhabricatorCalendarEvent.php
++++ b/src/applications/calendar/storage/PhabricatorCalendarEvent.php
+@@ -1387,6 +1387,10 @@ final class PhabricatorCalendarEvent extends PhabricatorCalendarDAO
+         ->setKey('endDateTime')
+         ->setType('datetime')
+         ->setDescription(pht('End date and time of the event.')),
++      id(new PhabricatorConduitSearchFieldSpecification())
++        ->setKey('hostPHID')
++        ->setType('phid')
++        ->setDescription(pht('PHID of the event host (author).')),
+     );
+   }
+ 
+@@ -1400,6 +1404,7 @@ final class PhabricatorCalendarEvent extends PhabricatorCalendarDAO
+       'isAllDay' => (bool)$this->getIsAllDay(),
+       'startDateTime' => $this->getConduitDateTime($start_datetime),
+       'endDateTime' => $this->getConduitDateTime($end_datetime),
++      'hostPHID' => $this->getHostPHID(),
+     );
+   }
+ 

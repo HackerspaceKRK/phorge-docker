@@ -31,6 +31,7 @@ RUN apt-get update -y && \
 
 COPY ./arcanist-enable-s3-over-http.patch /tmp/arcanist-enable-s3-over-http.patch
 COPY ./allow-calendar-search-by-dates.patch /tmp/allow-calendar-search-by-dates.patch
+COPY ./expose-calendar-event-host.patch /tmp/expose-calendar-event-host.patch
 
 RUN mkdir -p /var/www/phorge \
     && cd /var/www/phorge \
@@ -38,6 +39,7 @@ RUN mkdir -p /var/www/phorge \
     && cd /var/www/phorge/phorge \
     && git checkout $PHORGE_SHA \
     && git apply /tmp/allow-calendar-search-by-dates.patch \
+    && git apply /tmp/expose-calendar-event-host.patch \
     && cd /var/www/phorge \
     && git clone https://we.phorge.it/source/arcanist.git \
     && cd /var/www/phorge/arcanist \
