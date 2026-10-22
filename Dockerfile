@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.authors="alufers <alufers@wp.pl>"
 LABEL org.opencontainers.image.title="Phorge"
 LABEL org.opencontainers.image.description="Phorge is a Phabricator fork with a focus on performance and stability."
 
-ARG PHORGE_SHA=f7a7ef8c1a345976aa3c404c0f6622676f787f76
-ARG ARCANIST_SHA=fd29b156dec5ab4eb47b5df993c3786fb94140e1
+ARG PHORGE_SHA=ae9ca36cb2ea6a0bdfc5b40c25c7ebc0894c9cc6
+ARG ARCANIST_SHA=0577057f4fde93d0325d7fe055cb0fa8b71ec658
 
 
 ENV GIT_USER=git
@@ -35,13 +35,13 @@ COPY ./expose-calendar-event-host.patch /tmp/expose-calendar-event-host.patch
 
 RUN mkdir -p /var/www/phorge \
     && cd /var/www/phorge \
-    && git clone https://we.phorge.it/source/phorge.git \
+    && git clone https://github.com/phorgeit/phorge.git \
     && cd /var/www/phorge/phorge \
     && git checkout $PHORGE_SHA \
     && git apply /tmp/allow-calendar-search-by-dates.patch \
     && git apply /tmp/expose-calendar-event-host.patch \
     && cd /var/www/phorge \
-    && git clone https://we.phorge.it/source/arcanist.git \
+    && git clone https://github.com/phorgeit/arcanist.git \
     && cd /var/www/phorge/arcanist \
     && git checkout $ARCANIST_SHA \
     && git apply /tmp/arcanist-enable-s3-over-http.patch \
