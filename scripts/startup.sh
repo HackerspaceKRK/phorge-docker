@@ -101,7 +101,11 @@ else
     fi
 fi
 
-
+# "From" e-mail
+if [ -n "$METAMTA_DEFAULT_ADDRESS" ]
+then
+    /var/www/phorge/phorge/bin/config set metamta.default-address "$METAMTA_DEFAULT_ADDRESS"
+fi
 
 
 
