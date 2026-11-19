@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.authors="alufers <alufers@wp.pl>"
 LABEL org.opencontainers.image.title="Phorge"
 LABEL org.opencontainers.image.description="Phorge is a Phabricator fork with a focus on performance and stability."
 
-ARG PHORGE_SHA=ae9ca36cb2ea6a0bdfc5b40c25c7ebc0894c9cc6
-ARG ARCANIST_SHA=0577057f4fde93d0325d7fe055cb0fa8b71ec658
+ARG PHORGE_SHA=3e7e65891ba7e8f32c0fbaf14f407e7d54327dc5
+ARG ARCANIST_SHA=8f62b99493836640542e3b577990d511c7b76813
 
 
 ENV GIT_USER=git
