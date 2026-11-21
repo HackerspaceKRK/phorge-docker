@@ -25,7 +25,7 @@ RUN apt-get update -y && \
     mercurial subversion sudo apt-transport-https ca-certificates wget git \
     php8.4 php8.4-mysql php8.4-gd php8.4-curl php8.4-apcu php8.4-cli php8.4-ldap \
     php8.4-mbstring php8.4-fpm php8.4-zip php-pear php8.4-xml \
-    nginx supervisor procps python3-pygments imagemagick curl && \
+    nginx supervisor procps python3-pygments imagemagick curl tzdata-legacy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
